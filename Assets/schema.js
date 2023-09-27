@@ -32,3 +32,6 @@ instance.my.key = 'welcome';
 await instance.save();
 
 await MyModel.find({});
+
+const obj = { username: 'val', pwd: trusted({ $type: 'string', $eq: 'my secret' }) };
+sanitizeFilter(obj);
