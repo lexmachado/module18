@@ -35,3 +35,57 @@ await MyModel.find({});
 
 const obj = { username: 'val', pwd: trusted({ $type: 'string', $eq: 'my secret' }) };
 sanitizeFilter(obj);
+
+const mongoose = require('mongoose');
+
+const userSchema = new Schema({
+  username: {
+    type: String,
+    unique: true,
+    required: true,
+    trim: true,
+  },
+  email: {
+    type: String,
+    unique: true,
+    required: true,
+    trim: true,
+    match: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
+  },
+  thoughts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Thoughts', 
+  }],
+});
+
+const mongoose = require('mongoose');
+const { route } = require('../friends');
+
+const friendSchema = new Schema({
+  username: {
+    type: String,
+    unique: true,
+    required: true,
+    trim: true,
+  },
+  email: {
+    type: String,
+    unique: true,
+    required: true,
+    trim: true,
+    match: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
+  },
+  thoughts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Thought',
+  }],
+  friends: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User', 
+  }],
+});
+
+const User = mongoose.model('User', userSchema);
+routes = friendSchema ("friends.js")
+
+module.exports = User;
